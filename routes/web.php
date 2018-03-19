@@ -34,3 +34,10 @@ Route::get('/', function () {
 
     return view('welcome');
 });
+
+Route::any('/wechat/{account}','WechatController@serve');
+Route::any('/oauth_callback/{account}','WechatController@oauth_callback');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
