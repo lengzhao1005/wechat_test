@@ -18,7 +18,7 @@ class WechatController extends Controller
     public function serve($account)
     {
         $app = $this->wechat->app($account);
-
+dd($app);
         $app->server->push(function($message){
             switch ($message['MsgType']) {
                 case 'event':
@@ -58,7 +58,9 @@ class WechatController extends Controller
     public function oauth_callback($account)
     {
         $app = $this->wechat->app($account);
+        
         $user = $app->oauth->user();
+        dd($user);
         session(['wechat.oauth_user' => $user->toArray()]);
         //不管在哪个页面检测用户登录状态，都要写入session值：target_url
         $targetUrl = session()->has('target_url') ? session('target_url') : '/' ;

@@ -12,11 +12,10 @@
 */
 
 Route::get('/', function () {
-
-   /* //1. 将timestamp , nonce , token 按照字典排序
+    /*//1. 将timestamp , nonce , token 按照字典排序
     $timestamp = $_GET['timestamp'];
     $nonce = $_GET['nonce'];
-    $token = "你自定义的Token值 用于验证";
+    $token = "bei0501zhao";
     $signature = $_GET['signature'];
     $array = array($timestamp,$nonce,$token);
     sort($array);
@@ -35,8 +34,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::any('/wechat/{account}','WechatController@serve');
-Route::any('/oauth_callback/{account}','WechatController@oauth_callback');
+Route::any('/wechat/{account}','WeChat\WechatController@serve');
+Route::any('/oauth_callback/{account}','WeChat\WechatController@oauth_callback');
 
 Auth::routes();
 
