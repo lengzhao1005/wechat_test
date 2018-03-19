@@ -12,7 +12,7 @@ class WechatController extends Controller
 
     public function __construct(WechatConfigHandlers $wechat)
     {
-        //1. 将timestamp , nonce , token 按照字典排序
+       /* //1. 将timestamp , nonce , token 按照字典排序
         $timestamp = $_GET['timestamp'];
         $nonce = $_GET['nonce'];
         $token = "bei0501zhao";
@@ -29,14 +29,14 @@ class WechatController extends Controller
         {
             echo $_GET['echostr'];
             exit;
-        }
+        }*/
         $this->wechat = $wechat;
     }
 
     public function serve($account)
     {
         $app = $this->wechat->app($account);
-dd($app);
+
         $app->server->push(function($message){
             switch ($message['MsgType']) {
                 case 'event':
@@ -73,10 +73,14 @@ dd($app);
         return $response;
     }
 
-    public function oauth_callback($account)
+    public function oauth_callback($account,Request $request)
     {
         $app = $this->wechat->app($account);
-        
+
+        $response = $app->oauth->scopes(['snsapi_userinfo'])
+            ->redirect();
+
+        //回调后获取user时也要设置$request对象
         $user = $app->oauth->user();
         dd($user);
         session(['wechat.oauth_user' => $user->toArray()]);
